@@ -24,28 +24,28 @@ pub struct Pod {
     /// A user-defined name for the Pod. The name does not need to be unique.
     pub name: Option<String>,
     /// The image tag for the container run on the Pod.
-    pub image: String,
+    pub image: Option<String>,
     /// A unique string identifying the RunPod user who rents the Pod.
-    pub consumer_user_id: String,
+    pub consumer_user_id: Option<String>,
     /// A unique string identifying the host machine the Pod is running on.
-    pub machine_id: String,
+    pub machine_id: Option<String>,
     /// The current expected status of the Pod.
-    pub desired_status: PodStatus,
+    pub desired_status: Option<PodStatus>,
     /// The cost in RunPod credits per hour of running the Pod.
     /// Note that the actual cost may be lower if Savings Plans are applied.
-    pub cost_per_hr: f64,
+    pub cost_per_hr: Option<f64>,
     /// The effective cost in RunPod credits per hour of running the Pod,
     /// adjusted by active Savings Plans.
-    pub adjusted_cost_per_hr: f64,
+    pub adjusted_cost_per_hr: Option<f64>,
     /// The number of GPUs attached to the Pod (if it's a GPU Pod).
     pub gpu_count: Option<i32>,
     /// The number of virtual CPUs attached to the Pod.
-    pub vcpu_count: f64,
+    pub vcpu_count: Option<f64>,
     /// The amount of RAM, in gigabytes (GB), attached to the Pod.
-    pub memory_in_gb: f64,
+    pub memory_in_gb: Option<f64>,
     /// The amount of disk space, in gigabytes (GB), allocated on the container disk.
     /// The data on the container disk is wiped when the Pod restarts.
-    pub container_disk_in_gb: i32,
+    pub container_disk_in_gb: Option<i32>,
     /// The amount of disk space, in gigabytes (GB), allocated on the Pod volume.
     /// The data on the Pod volume is persisted across Pod restarts.
     pub volume_in_gb: Option<i32>,
@@ -53,10 +53,10 @@ pub struct Pod {
     pub volume_mount_path: Option<String>,
     /// Whether the local network volume of the Pod is encrypted.
     /// Can only be set when creating a Pod.
-    pub volume_encrypted: bool,
+    pub volume_encrypted: Option<bool>,
     /// A list of ports exposed on the Pod. Each port is formatted as
     /// `[port number]/[protocol]`. Protocol can be either `http` or `tcp`.
-    pub ports: Vec<String>,
+    pub ports: Option<Vec<String>>,
     /// A mapping of internal ports to public ports on the Pod.
     /// For example, `{"22": 10341}` means that port 22 on the Pod is mapped
     /// to port 10341 and is publicly accessible at `[public ip]:10341`.
@@ -65,7 +65,7 @@ pub struct Pod {
     /// this IP is not yet determined and will be empty.
     pub public_ip: Option<String>,
     /// Environment variables for the Pod container.
-    pub env: EnvVars,
+    pub env: Option<EnvVars>,
     /// If specified, overrides the ENTRYPOINT for the Docker image run on the Pod.
     /// If empty, uses the ENTRYPOINT defined in the image.
     pub docker_entrypoint: Option<Vec<String>>,
@@ -76,9 +76,9 @@ pub struct Pod {
     /// a lower cost but can be stopped at any time to free up resources for
     /// another Pod. A reserved Pod is rented at a higher cost but runs until
     /// it exits or is manually stopped.
-    pub interruptible: bool,
+    pub interruptible: Option<bool>,
     /// Whether the Pod is locked. Locking a Pod disables stopping or resetting it.
-    pub locked: bool,
+    pub locked: Option<bool>,
     /// GPU information if the Pod has GPUs attached.
     pub gpu: Option<GpuInfo>,
     /// If the Pod is a CPU Pod, the unique string identifying the CPU flavor
